@@ -12,6 +12,7 @@ def main():
         os.system('cls')
         questao = int(input("""1 - Questao 1 (Hamming)
 2 - Questao 2 (Checksum)
+3 - Sair 
     Escolha: """))
         # codificação de hamming
         if questao == 1:
@@ -22,6 +23,10 @@ def main():
         elif questao == 2:
             os.system('cls')
             checksum.cod_checksum()
+
+        elif questao == 3:
+            os.system('cls')
+            exit()
 
         else:
             print("Opção inválida. Tente novamente.\n")
