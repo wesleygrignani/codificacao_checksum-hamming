@@ -66,11 +66,11 @@ def receiver(dado_1, dado_2, dado_3, edc):
     # soma final com o EDC calculado pelo transceiver
     soma_final, carry = soma_binario(soma, edc)
     if (0 in soma_final):
-        print("Houve erros na transmissao")
-        print("Soma + edc: ", soma_final)
+        print("\nHouve erros na transmissao")
+        print("Soma(MSG1 + MSG2 + MSG3) + edc: ", soma_final)
     else:
-        print("Não Houve erros na transmissao")
-        print("Soma + edc: ", soma_final)
+        print("\nNão Houve erros na transmissao")
+        print("Soma(MSG1 + MSG2 + MSG3) + edc: ", soma_final)
     
     os.system('pause')
     main.main()

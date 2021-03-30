@@ -3,13 +3,13 @@
 # Trabalho: Comunicação digital
 # Questao 1 - Codificação Hamming
 
-
 import os
 import main
 import numpy as np
 from random import randint
 
 def cod_hamming():
+    # função de hamming 
     os.system('cls')
     escolha = int(input("""Codificação Hamming:   
            1 - Utilizar codigo de aluno 6495621 (13,9)
@@ -18,9 +18,9 @@ def cod_hamming():
            Escolha: """))
     try:
         if escolha == 1:
-            hamming13_9()
+            hamming13_9() # hamming (13,9)
         elif escolha == 2:
-            hamming12_8()
+            hamming12_8() # hamming (12,8)
         elif escolha == 3:
             os.system('cls')
             main.main()
@@ -33,31 +33,29 @@ def cod_hamming():
         os.system('pause')
         cod_hamming()
 
+# gera numero aleatorio
 def gera_numero(tam):
     return (randint(0, tam-1))
 
-
-# inversor de um bit na mensagem 
+# inversor de bits na mensagem 
 def injetor_erro(mensagem):
     qnt = int(input("Quantidade de erros: "))
-    # tam = len(mensagem)
-    # aux = 15
+    tam = len(mensagem)
+    aux = 15
 
     for i in range(qnt):
-        # pos = gera_numero(tam)
+        pos = gera_numero(tam)
+        # caso ja seja uma posição que foi trocada
+        while pos == aux:
+            pos = gera_numero(tam)
 
-        # while pos == aux:
-        #     pos = gera_numero(tam)
-
-        # mensagem[pos] = not mensagem[pos]
-        # aux = pos
-        pos = int(input("Qual posição trocar: "))
-        mensagem[pos-1] = not mensagem[pos-1]
+        mensagem[pos] = not mensagem[pos]
+        aux = pos
 
     return mensagem
 
 
-def corrigi_inversao(msg, k):
+def corrigi_inversao(msg, k): # analisa o vetor k para descobrir qual posição houve a inversão
     pos = 0
     for i in range(len(k)):
         if(k[i] == 1):
@@ -81,7 +79,7 @@ def receiver(msg):
 # detecta 1 erro e corrigi 
 # detecta 2 erros mas nao corrigi
     os.system('cls')
-
+    # codigo para o hamming (12,8)
     if (len(msg) == 12):
         k = np.zeros(4)
         k[0] = int(msg[0]) ^ int(msg[2]) ^ int(msg[4]) ^ int(msg[6]) ^ int(msg[8]) ^ int(msg[10])
@@ -111,6 +109,7 @@ def receiver(msg):
             os.system('pause')
             main.main()
     else:
+        # codigo para o hamming (13,9)
         k = np.zeros(4)
         k[0] = int(msg[0]) ^ int(msg[2]) ^ int(msg[4]) ^ int(msg[6]) ^ int(msg[8]) ^ int(msg[10]) ^ int(msg[12])
         k[1] = int(msg[1]) ^ int(msg[2]) ^ int(msg[5]) ^ int(msg[6]) ^ int(msg[9]) ^ int(msg[10])
@@ -119,10 +118,12 @@ def receiver(msg):
 
         p = int(msg[0]) ^ int(msg[1]) ^ int(msg[2]) ^ int(msg[3]) ^ int(msg[4]) ^ int(msg[5]) ^ int(msg[6]) ^ int(msg[7]) ^ int(msg[8]) ^ int(msg[9]) ^ int(msg[10]) ^ int(msg[11]) ^ int(msg[12])
 
+        # detecção de dois erros
         if (p == 0 and (1 in k)):
             print("Dois erros detectados") 
             os.system('pause')
             main.main()
+        # detecção e correção de um erro na mensagem
         elif(1 in k):
             print("Mensagem: ", msg)
             print("Houve 1 erro na posição em binario:", k)
@@ -139,9 +140,6 @@ def receiver(msg):
             os.system('pause')
             main.main()
     
-
-
-
 # funcao que recebe a mensagem e possui a opçao de injecação de erro para simular quando for enviado ao receiver
 def transceiver(mensagem):
     os.system('cls')
@@ -186,7 +184,7 @@ def hamming13_9():
         hamming13_9()
     else:
         data = np.zeros(13)
-        # calculo dos bits de paridade
+        # calculo dos bits de paridade p1, p2, p4, p8
         data[0] = int(msg[0]) ^ int(msg[1]) ^ int(msg[3]) ^ int(msg[4]) ^ int(msg[6]) ^ int(msg[8])
         data[1] = int(msg[0]) ^ int(msg[2]) ^ int(msg[3]) ^ int(msg[5]) ^ int(msg[6])              
         data[2] = msg[0] 
@@ -215,7 +213,7 @@ def hamming12_8():
         hamming12_8()
     else:
         data = np.zeros(12)
-        # calculo dos bits de paridade
+        # calculo dos bits de paridade p1, p2, p4, p8
         data[0] = int(msg[0]) ^ int(msg[1]) ^ int(msg[3]) ^ int(msg[4]) ^ int(msg[6])
         data[1] = int(msg[0]) ^ int(msg[2]) ^ int(msg[3]) ^ int(msg[5]) ^ int(msg[6])              
         data[2] = msg[0] 
