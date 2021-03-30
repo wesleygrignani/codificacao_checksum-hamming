@@ -82,6 +82,10 @@ def receiver(msg):
     # codigo para o hamming (12,8)
     if (len(msg) == 12):
         k = np.zeros(4)
+        #k0 = (p1) xor (x1) xor (x2) xor (x4) xor (x6) xor (x7)
+        #k2 = (p2) xor (x1) xor (x3) xor (x4) xor (x6) xor (x7)
+        #k4 = (p4) xor (x2) xor (x3) xor (x4) xor (x8) 
+        #k8 = (p8) xor (x5) xor (x6) xor (x7) xor (x8)
         k[0] = int(msg[0]) ^ int(msg[2]) ^ int(msg[4]) ^ int(msg[6]) ^ int(msg[8]) ^ int(msg[10])
         k[1] = int(msg[1]) ^ int(msg[2]) ^ int(msg[5]) ^ int(msg[6]) ^ int(msg[9]) ^ int(msg[10])
         k[2] = int(msg[3]) ^ int(msg[4]) ^ int(msg[5]) ^ int(msg[6]) ^ int(msg[11])
@@ -111,6 +115,10 @@ def receiver(msg):
     else:
         # codigo para o hamming (13,9)
         k = np.zeros(4)
+        #k0 = (p1) xor (x1) xor (x2) xor (x4) xor (x6) xor (x7) xor (x9)
+        #k2 = (p2) xor (x1) xor (x3) xor (x4) xor (x6) xor (x7)
+        #k4 = (p4) xor (x2) xor (x3) xor (x4) xor (x8) xor (x9)
+        #k8 = (p8) xor (x5) xor (x6) xor (x7) xor (x8) xor (x9)
         k[0] = int(msg[0]) ^ int(msg[2]) ^ int(msg[4]) ^ int(msg[6]) ^ int(msg[8]) ^ int(msg[10]) ^ int(msg[12])
         k[1] = int(msg[1]) ^ int(msg[2]) ^ int(msg[5]) ^ int(msg[6]) ^ int(msg[9]) ^ int(msg[10])
         k[2] = int(msg[3]) ^ int(msg[4]) ^ int(msg[5]) ^ int(msg[6]) ^ int(msg[11]) ^ int(msg[12])
